@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  .alignment {
+    @apply mx-auto max-w-6xl lg:max-w-7xl px-8;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

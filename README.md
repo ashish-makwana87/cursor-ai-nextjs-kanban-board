@@ -6,8 +6,12 @@
 **Key Features:**
 
 
-**Integrating Chadcn/ui**
+**Integrating Chadcn/ui using Cursor AI**
 <a href='' target='_blank'>
 <img src='./public/k2.JPG' width='700' alt='project image'>
 </a>
 
+**Creating kanban Board using Cursor AI**
+<a href='' target='_blank'>
+<img src='./public/k3.JPG' width='700' alt='project image'>
+</a>
