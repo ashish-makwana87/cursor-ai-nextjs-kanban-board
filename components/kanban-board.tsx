@@ -2,9 +2,8 @@ import { KanbanColumn } from "./kanban-column";
 import { TaskCard } from "./task-card";
 
 export function KanbanBoard() {
-
   return (
-    <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6 py-6 overflow-x-auto min-h-screen'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6 overflow-x-auto min-h-screen'>
       <KanbanColumn title='Todo'>
         <TaskCard
           title='Implement authentication'
