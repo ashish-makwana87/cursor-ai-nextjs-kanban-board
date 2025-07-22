@@ -5,6 +5,9 @@
 
 
 **Key Features:**
+- Adding latest docs (Next.js 15 docs, React 19 docs) as context for providing accurate suggestions to prompts. 
+- Use of Cursor AI' agent mode to generate new features. 
+- Use of Cursor AI's chat and manual option to refactor existing code and get valuable suggestions. 
 
 
 **Integrating Chadcn/ui using Cursor AI**

@@ -3,10 +3,10 @@ import { CreateTaskDialog } from "./create-task-dialog";
 import { Button } from "./ui/button";
 
 
-interface KanbanColumnProps {
+type KanbanColumnProps = {
   title: string;
   children: React.ReactNode;
-}
+};
 
 export function KanbanColumn({ title, children }: KanbanColumnProps) {
 
