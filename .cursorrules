@@ -4,4 +4,6 @@
 - Every single time we need to run a shadcn command, use `npx shadcn@latest`
 - use type instead of interface while creating TypeScript type check for object
 
+- use server actions whenever possible
+- use Next.js 15
 
