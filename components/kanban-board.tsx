@@ -12,10 +12,13 @@ export function KanbanBoard({ columnsWithTasks }: KanbanBoardProps) {
       {columnsWithTasks.map((column) => (
         <KanbanColumn key={column.id} title={column.name}>
           {column.tasks.map((task) => (
+            console.log(task),
+
             <TaskCard
               key={task.id}
               title={task.title}
               description={task.content || ""}
+              assignee={task.assignee || undefined}
             />
           ))}
         </KanbanColumn>

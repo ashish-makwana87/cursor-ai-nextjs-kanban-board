@@ -9,7 +9,8 @@ import {
 } from "./ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
-import { type User, users } from "@/lib/data";
+import { users } from "@/lib/data";
+import { User } from "@prisma/client";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -71,8 +72,8 @@ export function TaskCard({
               {assignee ? (
                 <div className='flex items-center gap-2'>
                   <Avatar className='h-5 w-5'>
-                    {assignee.avatar ? (
-                      <AvatarImage src={assignee.avatar} alt={assignee.name} />
+                    {assignee.avatarUrl ? (
+                      <AvatarImage src={assignee.avatarUrl} alt={assignee.name} />
                     ) : (
                       <AvatarFallback className='text-xs'>
                         {assignee.name.charAt(0)}

@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
-
+import { User } from "@prisma/client";
 
 const taskSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -90,6 +90,7 @@ export type ColumnWithTasks = {
     content: string | null;
     createdAt: Date;
     updatedAt: Date;
+    assignee: User | null;
   }[];
 };
 
@@ -100,6 +101,9 @@ export async function getColumnsWithTasks(): Promise<ColumnWithTasks[]> {
         tasks: {
           orderBy: {
             createdAt: "asc",
+          },
+          include: {
+            assignee: true,
           },
         },
       },
