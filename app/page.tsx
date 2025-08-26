@@ -1,10 +1,11 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import { KanbanBoard } from "@/components/kanban-board";
-import { getColumnsWithTasks } from "@/utils/actions";
+import { getAllUsers, getColumnsWithTasks } from "@/utils/actions";
 
 export default async function Home() {
-  // Fetch data server-side
+
   const columnsWithTasks = await getColumnsWithTasks();
+  const allUsers = await getAllUsers()
 
   return (
     <main className='relative'>
@@ -12,7 +13,7 @@ export default async function Home() {
         <ThemeToggle />
       </div>
       <section className='alignment'>
-        <KanbanBoard columnsWithTasks={columnsWithTasks} />
+        <KanbanBoard columnsWithTasks={columnsWithTasks} allUsers={allUsers} />
       </section>
     </main>
   );

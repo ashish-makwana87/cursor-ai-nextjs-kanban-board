@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { createTask, type FormState } from "@/utils/actions";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,13 +21,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { users } from "@/lib/data";
+import { User } from "@prisma/client";
+import { getAllUsers } from "@/utils/actions";
+
 
 function SubmitButton() {
-  const { pending } = useFormStatus();
+
   return (
-    <Button type='submit' disabled={pending}>
-      {pending ? "Creating..." : "Create Task"}
+    <Button type='submit'>
+      Create Task
     </Button>
   );
 }
@@ -40,16 +40,18 @@ type CreateTaskDialogProps = {
 
 export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
   const [open, setOpen] = useState(false);
-  
+  const [users, setUsers] = useState<User[] | undefined>(undefined)
 
-  const initialState: FormState = { message: "", errors: {} };
-  const [state, action] = useActionState(createTask, initialState);
 
   useEffect(() => {
-    if (state.message === "Task created successfully.") {
-      setOpen(false);
+    async function getUsers() {
+      
+      const allUsers = await getAllUsers()
+      setUsers(allUsers)
     }
-  }, [state]);
+   
+    getUsers()
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
@@ -58,7 +60,7 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
         <DialogHeader>
           <DialogTitle>Create New Task</DialogTitle>
         </DialogHeader>
-        <form action={action} className='space-y-4'>
+        <form className='space-y-4'>
           <div className='space-y-2'>
             <Label htmlFor='title'>Title</Label>
             <Input
@@ -66,11 +68,7 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
               name='title'
               placeholder='e.g. Add a new task'
             />
-            {state.errors?.title && (
-              <p className='text-sm font-medium text-destructive'>
-                {state.errors.title[0]}
-              </p>
-            )}
+          
           </div>
           <div className='space-y-2'>
             <Label htmlFor='description'>Description</Label>
@@ -79,11 +77,7 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
               name='description'
               placeholder='Add a short description (optional)'
             />
-            {state.errors?.description && (
-              <p className='text-sm font-medium text-destructive'>
-                {state.errors.description[0]}
-              </p>
-            )}
+            
           </div>
           <div className='space-y-2'>
             <Label>Assignee</Label>
@@ -92,12 +86,12 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
                 <SelectValue placeholder='Select an assignee' />
               </SelectTrigger>
               <SelectContent>
-                {users.map((user) => (
+                {users?.map((user) => (
                   <SelectItem key={user.id} value={user.id}>
                     <div className='flex items-center gap-2'>
                       <Avatar className='h-5 w-5'>
-                        {user.avatar ? (
-                          <AvatarImage src={user.avatar} alt={user.name} />
+                        {user.avatarUrl ? (
+                          <AvatarImage src={user.avatarUrl} alt={user.name} />
                         ) : (
                           <AvatarFallback className='text-xs'>
                             {user.name.charAt(0)}
@@ -110,11 +104,7 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
                 ))}
               </SelectContent>
             </Select>
-            {state.errors?.assigneeId && (
-              <p className='text-sm font-medium text-destructive'>
-                {state.errors.assigneeId[0]}
-              </p>
-            )}
+            
           </div>
           <DialogFooter>
             <SubmitButton />

@@ -9,7 +9,6 @@ import {
 } from "./ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
-import { users } from "@/lib/data";
 import { User } from "@prisma/client";
 import { Button } from "./ui/button";
 import {
@@ -24,7 +23,8 @@ import { EditTaskDialog } from "./edit-task-dialog";
 type TaskCardProps = {
   title: string;
   description?: string;
-  assignee?: User;
+  assignee?: User | undefined;
+  allUsers:  User[] | undefined
   onAssigneeChange?: (userId: string) => void;
 };
 
@@ -33,6 +33,7 @@ export function TaskCard({
   description,
   assignee,
   onAssigneeChange,
+  allUsers
 }: TaskCardProps) {
   return (
     <Card className='mb-4 overflow-hidden shadow-sm border-muted'>
@@ -87,12 +88,12 @@ export function TaskCard({
               )}
             </SelectTrigger>
             <SelectContent>
-              {users.map((user) => (
+              {allUsers?.map((user) => (
                 <SelectItem key={user.id} value={user.id}>
                   <div className='flex items-center gap-2'>
                     <Avatar className='h-5 w-5'>
-                      {user.avatar ? (
-                        <AvatarImage src={user.avatar} alt={user.name} />
+                      {user.avatarUrl ? (
+                        <AvatarImage src={user.avatarUrl} alt={user.name} />
                       ) : (
                         <AvatarFallback className='text-xs'>
                           {user.name.charAt(0)}
