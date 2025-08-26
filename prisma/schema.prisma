@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  avatarUrl String?
+  tasks     Task[]   @relation("UserTasks")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Column {
   id        String   @id @default(uuid())
   name      String
@@ -21,6 +30,8 @@ model Task {
   content   String?
   column    Column   @relation(fields: [columnId], references: [id])
   columnId  String
+  assignee   User?    @relation("UserTasks", fields: [assigneeId], references: [id])
+  assigneeId String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 } 

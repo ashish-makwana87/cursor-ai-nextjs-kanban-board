@@ -1,5 +1,5 @@
 {
-  "name": "cursorai-nextjs-kanban-dashboard",
+  "name": "nextjs-kanban-dashboard-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate",
+    "prisma": "prisma"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

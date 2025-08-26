@@ -24,6 +24,7 @@ export async function createTask(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
+  
   const validatedFields = taskSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description"),
@@ -37,7 +38,7 @@ export async function createTask(
     };
   }
 
-  // This is where you would insert the data into your database.
+  
   console.log("New task created:", validatedFields.data);
   // For demonstration, we're not persisting the new task.
   // In a real app you would update your data source and revalidate.

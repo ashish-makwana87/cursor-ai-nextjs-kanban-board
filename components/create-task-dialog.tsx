@@ -40,7 +40,7 @@ type CreateTaskDialogProps = {
 
 export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
   const [open, setOpen] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  
 
   const initialState: FormState = { message: "", errors: {} };
   const [state, action] = useActionState(createTask, initialState);
@@ -48,24 +48,23 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
   useEffect(() => {
     if (state.message === "Task created successfully.") {
       setOpen(false);
-      formRef.current?.reset();
     }
   }, [state]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle>Create New Task</DialogTitle>
         </DialogHeader>
-        <form ref={formRef} action={action} className='space-y-4'>
+        <form action={action} className='space-y-4'>
           <div className='space-y-2'>
             <Label htmlFor='title'>Title</Label>
             <Input
               id='title'
               name='title'
-              placeholder='e.g. Add a new feature'
+              placeholder='e.g. Add a new task'
             />
             {state.errors?.title && (
               <p className='text-sm font-medium text-destructive'>
@@ -79,7 +78,6 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
               id='description'
               name='description'
               placeholder='Add a short description (optional)'
-              className='resize-none'
             />
             {state.errors?.description && (
               <p className='text-sm font-medium text-destructive'>

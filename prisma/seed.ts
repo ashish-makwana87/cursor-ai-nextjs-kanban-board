@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Clear existing data first
   await prisma.task.deleteMany();
+  await prisma.user.deleteMany();
   await prisma.column.deleteMany();
 
   // Create columns
@@ -20,12 +20,28 @@ async function main() {
     data: { name: "Done" },
   });
 
+  // Create users
+  const alice = await prisma.user.create({
+    data: {
+      name: "Alice Johnson",
+      avatarUrl: "https://i.pravatar.cc/150?img=1",
+    },
+  });
+
+  const bob = await prisma.user.create({
+    data: {
+      name: "Bob Smith",
+      avatarUrl: "https://i.pravatar.cc/150?img=2",
+    },
+  });
+
   // Create tasks
   await prisma.task.create({
     data: {
       title: "Implement authentication",
       content: "Set up NextAuth.js for user authentication",
       columnId: todoColumn.id,
+      assigneeId: alice.id,
     },
   });
 
@@ -34,6 +50,7 @@ async function main() {
       title: "Design system",
       content: "Create consistent component library",
       columnId: todoColumn.id,
+      assigneeId: bob.id,
     },
   });
 
@@ -42,6 +59,7 @@ async function main() {
       title: "Kanban board",
       content: "Create drag and drop kanban board",
       columnId: inProgressColumn.id,
+      assigneeId: alice.id,
     },
   });
 
@@ -50,6 +68,7 @@ async function main() {
       title: "Project setup",
       content: "Initial project configuration",
       columnId: doneColumn.id,
+      assigneeId: bob.id,
     },
   });
 

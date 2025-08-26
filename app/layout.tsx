@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Next.js Kanban Dashboard",
-  description: "Next.js Kanban Dashboard created using Cursor AI.",
+  description: "Next.js Kanban dashboard app created using Docker and postgres.",
 };
 
 export default function RootLayout({
