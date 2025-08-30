@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User } from "@prisma/client";
-import { getAllUsers } from "@/utils/actions";
+import { createTask, getAllUsers } from "@/utils/actions";
 
 
 function SubmitButton() {
@@ -35,13 +35,17 @@ function SubmitButton() {
 }
 
 type CreateTaskDialogProps = {
+  columnId: string
   children: React.ReactNode;
 };
 
-export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
+const initialState = {message: ''}
+
+export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) {
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[] | undefined>(undefined)
-
+  const [state, action] = useActionState(createTask, initialState)
+  
 
   useEffect(() => {
     async function getUsers() {
@@ -49,7 +53,7 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
       const allUsers = await getAllUsers()
       setUsers(allUsers)
     }
-   
+    
     getUsers()
   }, []);
 
@@ -60,7 +64,8 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
         <DialogHeader>
           <DialogTitle>Create New Task</DialogTitle>
         </DialogHeader>
-        <form className='space-y-4'>
+        <form action={action} className='space-y-4'>
+          <input type="hidden" name="columnId" value={columnId} />
           <div className='space-y-2'>
             <Label htmlFor='title'>Title</Label>
             <Input
@@ -71,10 +76,10 @@ export function CreateTaskDialog({ children }: CreateTaskDialogProps) {
           
           </div>
           <div className='space-y-2'>
-            <Label htmlFor='description'>Description</Label>
+            <Label htmlFor='content'>Description</Label>
             <Textarea
-              id='description'
-              name='description'
+              id='content'
+              name='content'
               placeholder='Add a short description (optional)'
             />
             

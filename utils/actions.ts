@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/utils/prisma";
 import { ColumnWithTasks } from "./types";
+import { revalidatePath } from "next/cache";
 
 
 export async function getAllUsers() {
@@ -40,3 +41,19 @@ export async function getColumnsWithTasks(): Promise<ColumnWithTasks[]> {
 }
 
 
+export async function createTask(initialState: any, formData: FormData): Promise<{message: string}> {
+
+try {
+ const rawData: {title: string, content: string | null, columnId: string, assigneeId: string | null} = Object.fromEntries(formData);
+ 
+ if(rawData.assigneeId === "") rawData.assigneeId = null;
+ if(rawData.content === "") rawData.content = null;
+
+  await prisma.task.create({data: rawData})
+  revalidatePath('/')
+  return {message: "task created successfully"};
+} catch (error) {
+  
+  return {message: error instanceof Error ? error.message : "There was an error creating a task" };
+}
+}
