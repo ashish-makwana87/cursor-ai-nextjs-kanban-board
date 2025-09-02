@@ -2,6 +2,7 @@
 import { prisma } from "@/utils/prisma";
 import { ColumnWithTasks } from "./types";
 import { revalidatePath } from "next/cache";
+import { taskSchema, validateWithZodSchema } from "./zod";
 
 
 export async function getAllUsers() {
@@ -44,12 +45,10 @@ export async function getColumnsWithTasks(): Promise<ColumnWithTasks[]> {
 export async function createTask(initialState: any, formData: FormData): Promise<{message: string}> {
 
 try {
- const rawData: {title: string, content: string | null, columnId: string, assigneeId: string | null} = Object.fromEntries(formData);
+ const rawData = Object.fromEntries(formData);
+ const validatedFields = validateWithZodSchema(taskSchema, rawData)
  
- if(rawData.assigneeId === "") rawData.assigneeId = null;
- if(rawData.content === "") rawData.content = null;
-
-  await prisma.task.create({data: rawData})
+  await prisma.task.create({data: validatedFields})
   revalidatePath('/')
   return {message: "task created successfully"};
 } catch (error) {

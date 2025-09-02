@@ -71,7 +71,8 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
             <Input
               id='title'
               name='title'
-              placeholder='e.g. Add a new task'
+            
+              required
             />
           
           </div>
@@ -80,13 +81,14 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
             <Textarea
               id='content'
               name='content'
-              placeholder='Add a short description (optional)'
+              placeholder='Add a short description (min 5 characters)'
+              required
             />
             
           </div>
           <div className='space-y-2'>
             <Label>Assignee</Label>
-            <Select name='assigneeId'>
+            <Select name='assigneeId' required>
               <SelectTrigger>
                 <SelectValue placeholder='Select an assignee' />
               </SelectTrigger>
