@@ -36,12 +36,11 @@ function SubmitButton() {
 
 type CreateTaskDialogProps = {
   columnId: string
-  children: React.ReactNode;
 };
 
 const initialState = {message: ''}
 
-export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) {
+export function CreateTaskDialog({columnId }: CreateTaskDialogProps) {
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[] | undefined>(undefined)
   const [state, action] = useActionState(createTask, initialState)
@@ -59,7 +58,9 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger asChild>
+        <span className="text-sm md:text-base cursor-pointer justify-start p-2" >+ Create task</span>
+      </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle>Create New Task</DialogTitle>
