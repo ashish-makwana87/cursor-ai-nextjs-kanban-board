@@ -58,7 +58,7 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
   }, []);
 
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
@@ -71,7 +71,6 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
             <Input
               id='title'
               name='title'
-            
               required
             />
           
@@ -82,13 +81,11 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
               id='content'
               name='content'
               placeholder='Add a short description (min 5 characters)'
-              required
             />
-            
           </div>
           <div className='space-y-2'>
             <Label>Assignee</Label>
-            <Select name='assigneeId' required>
+            <Select name='assigneeId'>
               <SelectTrigger>
                 <SelectValue placeholder='Select an assignee' />
               </SelectTrigger>
@@ -111,7 +108,6 @@ export function CreateTaskDialog({ children, columnId }: CreateTaskDialogProps) 
                 ))}
               </SelectContent>
             </Select>
-            
           </div>
           <DialogFooter>
             <SubmitButton />

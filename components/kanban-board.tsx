@@ -17,8 +17,9 @@ export function KanbanBoard({ columnsWithTasks, allUsers }: KanbanBoardProps) {
           {column.tasks.map((task) => (
             <TaskCard
               key={task.id}
+              taskId={task.id}
               title={task.title}
-              description={task.content || ""}
+              content={task.content || ""}
               assignee={task.assignee || undefined}
               allUsers={allUsers}
             />

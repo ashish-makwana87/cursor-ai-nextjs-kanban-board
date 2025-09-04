@@ -21,24 +21,24 @@ import { MoreHorizontal } from "lucide-react";
 import { EditTaskDialog } from "./edit-task-dialog";
 
 type TaskCardProps = {
+  taskId: string,
   title: string;
-  description?: string;
+  content?: string;
   assignee?: User | undefined;
   allUsers:  User[] | undefined
-  onAssigneeChange?: (userId: string) => void;
 };
 
 export function TaskCard({
+  taskId,
   title,
-  description,
+  content,
   assignee,
-  onAssigneeChange,
   allUsers
 }: TaskCardProps) {
   return (
     <Card className='mb-4 overflow-hidden shadow-sm border-muted'>
-      <CardHeader className='p-2 pb-0 flex flex-row items-start justify-between'>
-        <CardTitle className='text-sm font-medium mb-0'>{title}</CardTitle>
+      <CardHeader className='flex flex-row items-start justify-between'>
+        <CardTitle className='text-sm font-medium mb-0 capitalize'>{title}</CardTitle>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant='ghost' size='icon' className='h-6 w-6'>
@@ -49,9 +49,9 @@ export function TaskCard({
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
               <EditTaskDialog
                 task={{
-                  id: "some-id", // You'll need to pass the real task ID here
+                  id: taskId,
                   title,
-                  description,
+                  content,
                   assignee,
                 }}
               />
@@ -60,15 +60,15 @@ export function TaskCard({
         </DropdownMenu>
       </CardHeader>
 
-      {description && (
-        <CardContent className='p-2 pt-1 text-sm text-muted-foreground'>
-          {description}
+      {content && (
+        <CardContent className='text-sm text-muted-foreground'>
+          {content}
         </CardContent>
       )}
 
-      <CardFooter className='p-2 pt-0 flex items-center justify-between'>
+      <CardFooter className='pt-0 flex items-center justify-between'>
         <div className='flex items-center gap-2'>
-          <Select defaultValue={assignee?.id} onValueChange={onAssigneeChange}>
+          <Select defaultValue={assignee?.id}>
             <SelectTrigger className='h-8 w-fit gap-1 text-xs'>
               {assignee ? (
                 <div className='flex items-center gap-2'>

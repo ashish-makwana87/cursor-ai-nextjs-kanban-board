@@ -6,7 +6,8 @@ export default async function Home() {
 
   const columnsWithTasks = await getColumnsWithTasks();
   const allUsers = await getAllUsers()
-
+  
+  
   return (
     <main className='relative'>
       <div className='absolute top-4 right-4 z-10'>

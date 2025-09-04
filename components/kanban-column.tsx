@@ -11,7 +11,7 @@ type KanbanColumnProps = {
 export function KanbanColumn({ title, columnId, children }: KanbanColumnProps) {
 
   return (
-    <Card className="w-full min-w-[320px]">
+    <Card className="w-full min-w-[320px] bg-[#f2f2f2]">
       <CardHeader className="px-4 text-center">
         <CardTitle className="text-center text-lg">{title}</CardTitle>
       </CardHeader>

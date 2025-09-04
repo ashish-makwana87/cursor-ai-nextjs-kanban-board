@@ -2,7 +2,7 @@
 import { prisma } from "@/utils/prisma";
 import { ColumnWithTasks } from "./types";
 import { revalidatePath } from "next/cache";
-import { taskSchema, validateWithZodSchema } from "./zod";
+import { editTaskSchema, taskSchema, validateWithZodSchema } from "./zod";
 
 
 export async function getAllUsers() {
@@ -54,5 +54,24 @@ try {
 } catch (error) {
   
   return {message: error instanceof Error ? error.message : "There was an error creating a task" };
+}
+}
+
+
+
+export async function editTask(initialState: any, formData: FormData): Promise<{message: string}> {
+
+try {
+  const rawData = Object.fromEntries(formData);
+  const validatedFields = validateWithZodSchema(editTaskSchema, rawData);
+  
+  const {id,...data} = validatedFields
+
+  await prisma.task.update({where: {id: validatedFields.id}, data})
+  revalidatePath("/")
+  return {message: "Task updated successfully."}
+} catch (error) {
+  
+  return {message: error instanceof Error ? error.message : "Error updating the task."}
 }
 }

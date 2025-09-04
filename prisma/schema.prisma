@@ -31,8 +31,8 @@ model Task {
   content   String?
   column    Column   @relation(fields: [columnId], references: [id])
   columnId  String
-  assignee   User   @relation("UserTasks", fields: [assigneeId], references: [id])  
-  assigneeId String
+  assignee   User?   @relation("UserTasks", fields: [assigneeId], references: [id])  
+  assigneeId String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 } 
