@@ -1,5 +1,5 @@
 import { deleteTask } from "@/utils/actions";
-import { useTransition, type Dispatch, type FormEventHandler, type SetStateAction } from "react";
+import { useTransition, type Dispatch, type SetStateAction } from "react";
 
 type ChildProps = {
   taskId: string
@@ -7,8 +7,8 @@ type ChildProps = {
 };
 
 function DeleteTask({setOpen, taskId}: ChildProps ) {
- const [isPending, startTransition] = useTransition()
-const deleteTaskAction = deleteTask.bind(null, taskId)
+ const [isPending, startTransition] = useTransition();
+ const deleteTaskAction = deleteTask.bind(null, taskId);
  
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -17,7 +17,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
  startTransition(async () => {
   
   await deleteTaskAction()
-setOpen(false)
+  setOpen(false)
  }) 
 }
 

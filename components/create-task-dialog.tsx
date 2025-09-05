@@ -23,6 +23,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User } from "@prisma/client";
 import { createTask, getAllUsers } from "@/utils/actions";
+import { toast } from "react-toastify";
 
 
 function SubmitButton() {
@@ -44,7 +45,15 @@ export function CreateTaskDialog({columnId }: CreateTaskDialogProps) {
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[] | undefined>(undefined)
   const [state, action] = useActionState(createTask, initialState)
-  
+   
+ 
+  useEffect(() => {
+   
+    if(state.message) {
+    toast.success(state.message)
+    }
+
+  }, [state])
 
   useEffect(() => {
     async function getUsers() {
