@@ -75,3 +75,15 @@ try {
   return {message: error instanceof Error ? error.message : "Error updating the task."}
 }
 }
+
+
+export const deleteTask = async (taskId: string) => {
+
+  try {
+    await prisma.task.delete({where: {id: taskId}})
+    revalidatePath('/')
+  } catch (error) {
+    console.error(error instanceof Error ? error.cause : "Something went wrong.");
+  }
+
+}
