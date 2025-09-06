@@ -65,7 +65,7 @@ try {
   const rawData = Object.fromEntries(formData);
   const validatedFields = validateWithZodSchema(editTaskSchema, rawData);
   
-  const {id,...data} = validatedFields
+  const {id,...data} = validatedFields;
 
   await prisma.task.update({where: {id: validatedFields.id}, data})
   revalidatePath("/")
@@ -85,5 +85,4 @@ export const deleteTask = async (taskId: string) => {
   } catch (error) {
     console.error(error instanceof Error ? error.cause : "Something went wrong.");
   }
-
 }

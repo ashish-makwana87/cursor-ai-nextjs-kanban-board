@@ -7,6 +7,14 @@
   .alignment {
     @apply mx-auto max-w-6xl lg:max-w-7xl px-8;
   }
+
+  .modal-overlay {
+    @apply fixed w-full h-full -z-10 top-0 left-0 bg-black/20 invisible opacity-0 grid place-items-center
+  }
+
+  .show-modal {
+    @apply visible opacity-100 z-10
+  }
 }
 
 @theme inline {
