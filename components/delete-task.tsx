@@ -11,10 +11,9 @@ function DeleteTask({setOpen, taskId}: ChildProps ) {
  const deleteTaskAction = deleteTask.bind(null, taskId);
  
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-
  e.preventDefault();
  
- startTransition(async () => {
+  startTransition(async () => {
   
   await deleteTaskAction()
   setOpen(false)
