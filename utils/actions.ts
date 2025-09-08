@@ -46,6 +46,8 @@ export async function createTask(initialState: any, formData: FormData): Promise
 
 try {
  const rawData = Object.fromEntries(formData);
+ console.log(rawData);
+ 
  const validatedFields = validateWithZodSchema(taskSchema, rawData)
  
   await prisma.task.create({data: validatedFields})
@@ -63,6 +65,8 @@ export async function editTask(initialState: any, formData: FormData): Promise<{
 
 try {
   const rawData = Object.fromEntries(formData);
+  console.log(rawData);
+  
   const validatedFields = validateWithZodSchema(editTaskSchema, rawData);
   
   const {id,...data} = validatedFields;

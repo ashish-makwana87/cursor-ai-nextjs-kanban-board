@@ -14,13 +14,12 @@ type TaskInfo = {
 };
 
 function CustomDropDown({taskInfo}:{taskInfo: TaskInfo}) {
- 
  const [open, setOpen] = useState<boolean>(false)
  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <section className='relative'>
-     <Button onClick={() => setOpen(true)} size='icon' variant='ghost' ><IoEllipsisHorizontalSharp /></Button>
+     <Button onClick={() => setOpen((prev) => !prev)} size='icon' variant='ghost' ><IoEllipsisHorizontalSharp /></Button>
      {open && <div className="absolute w-28 top-10 right-0 border rounded-md p-1 bg-white">
       <ul>
        <li className="p-2 text-sm hover:bg-gray-100 rounded-md cursor-pointer"><button type="button" onClick={() => {setIsModalOpen(true); setOpen(false)}}>Edit task</button></li>

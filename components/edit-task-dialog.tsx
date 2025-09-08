@@ -9,6 +9,8 @@ import { editTask, getAllUsers } from "@/utils/actions";
 import { type Dispatch, type SetStateAction } from "react";
 import ReactDOM from "react-dom"
 import { IoCloseCircleSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type EditTaskDialogProps = {
   id: string;
@@ -59,6 +61,26 @@ export function EditTaskDialog({
             <div className='space-y-2'>
               <Label htmlFor='content'>Description</Label>
               <Textarea id='content' name='content' defaultValue={content} />
+            </div>
+            <div className="space-y-2">
+            <Label>Assignee</Label>
+            <Select name='assigneeId' defaultValue={assignee?.id || ""}>
+             <SelectTrigger>
+              <SelectValue placeholder= "Select an assignee" />
+             </SelectTrigger>
+             <SelectContent>
+              {users?.map((user) => {
+                return <SelectItem key={user.id} value={user.id} >
+                  <div className="flex gap-2 items-center">
+                  <Avatar className="h-5 w-5">
+                   {user.avatarUrl ? <AvatarImage src={user.avatarUrl} alt={user.name} /> : <AvatarFallback className="text-xs">{user.name.charAt(0)}</AvatarFallback> }
+                  </Avatar>
+                  <span>{user.name}</span>
+                  </div>
+                </SelectItem>
+              })}
+             </SelectContent>
+            </Select>
             </div>
             <Button type='submit'>Submit</Button>
           </form>
