@@ -1,4 +1,3 @@
-import { ReactScan } from "@/components/react-scan";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -20,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={inter.className}>
-        <ReactScan />
         <Providers>
           {children}
         </Providers>
