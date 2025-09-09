@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { User } from "@prisma/client";
 import { editTask, getAllUsers } from "@/utils/actions";
 import { type Dispatch, type SetStateAction } from "react";
-import ReactDOM from "react-dom"
+import { createPortal } from "react-dom"
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -45,8 +45,9 @@ export function EditTaskDialog({
   }, []);
   
   if(!isModalOpen) return null;
+  
 
-  return ReactDOM.createPortal(<div
+  return createPortal(<div
         className="modal-overlay show-modal"
       >
         <div className='relative bg-white w-[90vw] md:w-[28rem] lg:w-[30rem] p-8 rounded-md'>
