@@ -21,7 +21,7 @@ type EditTaskDialogProps = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const initialState = { message: "" };
+const initialState = { message: "", success: false };
 
 export function EditTaskDialog({
   id,
@@ -32,8 +32,16 @@ export function EditTaskDialog({
   setIsModalOpen
 }: EditTaskDialogProps) {
   const [users, setUsers] = useState<User[] | undefined>(undefined);
-  const [state, action] = useActionState(editTask, initialState);
+  const [state, action, isPending] = useActionState(editTask, initialState);
   
+  useEffect(() => {
+    if(!state.message) return; 
+
+    if(state.success) {
+      toast.success(state.message)
+      setIsModalOpen(false)
+    } else {toast.error(state.message)}
+  }, [state.message, state.success])
 
   useEffect(() => {
     async function getUsers() {
@@ -48,10 +56,9 @@ export function EditTaskDialog({
   
 
   return createPortal(<div
-        className="modal-overlay show-modal"
+        className="modal-overlay"
       >
-        <div className='relative bg-white w-[90vw] md:w-[28rem] lg:w-[30rem] p-8 rounded-md'>
-          
+        <div className='relative bg-white w-[90vw] md:w-[28rem] lg:w-[30rem] p-8 rounded-md'> 
           <button type="button" onClick={() => setIsModalOpen(false)} aria-label="Close edit task modal" className="absolute top-4 right-4"><IoCloseCircleSharp className="w-6 h-6" /></button>
           <form action={action} className='space-y-4'>
             <input type='hidden' name='id' value={id} />
@@ -83,7 +90,7 @@ export function EditTaskDialog({
              </SelectContent>
             </Select>
             </div>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit'>{isPending ? "Submitting..." : "Submit"}</Button>
           </form>
         </div>
       </div>, document.body)

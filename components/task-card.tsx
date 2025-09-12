@@ -8,17 +8,7 @@ import {
   CardFooter,
 } from "./ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import { User } from "@prisma/client";
-import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
-import { EditTaskDialog } from "./edit-task-dialog";
 import CustomDropDown from "./custom-drop-down";
 
 type TaskCardProps = {
@@ -26,7 +16,6 @@ type TaskCardProps = {
   title: string;
   content: string;
   assignee: User | undefined;
-  allUsers: User[] | undefined;
 };
 
 export function TaskCard({
@@ -34,8 +23,9 @@ export function TaskCard({
   title,
   content,
   assignee,
-  allUsers,
 }: TaskCardProps) {
+
+
   return (
     <Card className='mb-4 overflow-hidden border-muted'>
       <CardHeader className='flex items-center justify-between'>

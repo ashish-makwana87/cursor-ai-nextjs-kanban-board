@@ -42,41 +42,37 @@ export async function getColumnsWithTasks(): Promise<ColumnWithTasks[]> {
 }
 
 
-export async function createTask(initialState: any, formData: FormData): Promise<{message: string}> {
+export async function createTask(initialState: any, formData: FormData): Promise<{message: string, success: boolean}> {
 
 try {
  const rawData = Object.fromEntries(formData);
- console.log(rawData);
- 
  const validatedFields = validateWithZodSchema(taskSchema, rawData)
  
   await prisma.task.create({data: validatedFields})
   revalidatePath('/')
-  return {message: "task created successfully"};
+  return {message: "task created successfully", success: true};
 } catch (error) {
   
-  return {message: error instanceof Error ? error.message : "There was an error creating a task" };
+  return {message: error instanceof Error ? error.message : "There was an error creating a task", success: false };
 }
 }
 
 
 
-export async function editTask(initialState: any, formData: FormData): Promise<{message: string}> {
+export async function editTask(initialState: any, formData: FormData): Promise<{message: string, success: boolean}> {
 
 try {
   const rawData = Object.fromEntries(formData);
-  console.log(rawData);
-  
   const validatedFields = validateWithZodSchema(editTaskSchema, rawData);
   
   const {id,...data} = validatedFields;
 
   await prisma.task.update({where: {id: validatedFields.id}, data})
   revalidatePath("/")
-  return {message: "Task updated successfully."}
+  return {message: "Task updated successfully.", success: true}
 } catch (error) {
   
-  return {message: error instanceof Error ? error.message : "Error updating the task."}
+  return {message: error instanceof Error ? error.message : "Error updating the task.", success: false}
 }
 }
 

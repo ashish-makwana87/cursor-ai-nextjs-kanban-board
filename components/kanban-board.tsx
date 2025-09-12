@@ -1,14 +1,11 @@
-import { User } from "@prisma/client";
 import { KanbanColumn } from "./kanban-column";
 import { TaskCard } from "./task-card";
-import { ColumnWithTasks } from "@/utils/types";
+import { getColumnsWithTasks } from "@/utils/actions";
 
-type KanbanBoardProps = {
-  columnsWithTasks: ColumnWithTasks[];
-  allUsers: User[] | undefined
-};
 
-export function KanbanBoard({ columnsWithTasks, allUsers }: KanbanBoardProps) {
+export async function KanbanBoard() {
+  
+   const columnsWithTasks = await getColumnsWithTasks();
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-6 overflow-x-auto min-h-screen'>
@@ -21,7 +18,6 @@ export function KanbanBoard({ columnsWithTasks, allUsers }: KanbanBoardProps) {
               title={task.title}
               content={task.content || ""}
               assignee={task.assignee || undefined}
-              allUsers={allUsers}
             />
           ))}
         </KanbanColumn>
