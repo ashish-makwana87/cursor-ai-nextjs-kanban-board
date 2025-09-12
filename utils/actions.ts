@@ -41,8 +41,8 @@ export async function getColumnsWithTasks(): Promise<ColumnWithTasks[]> {
   }
 }
 
-
-export async function createTask(initialState: any, formData: FormData): Promise<{message: string, success: boolean}> {
+// _initialState to ignore unused variable warnings
+export async function createTask(_initialState: { message: string; success: boolean }, formData: FormData): Promise<{message: string, success: boolean}> {
 
 try {
  const rawData = Object.fromEntries(formData);
@@ -58,8 +58,8 @@ try {
 }
 
 
-
-export async function editTask(initialState: any, formData: FormData): Promise<{message: string, success: boolean}> {
+// _initialState to ignore unused variable warnings
+export async function editTask(_initialState: { message: string; success: boolean }, formData: FormData): Promise<{message: string, success: boolean}> {
 
 try {
   const rawData = Object.fromEntries(formData);
